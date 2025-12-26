@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Suhassing Rajput | AIML Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #00d4ff; --secondary: #667eea; --dark: #0a0a0a; --glass: rgba(255,255,255,0.05);
+      --text: #e2e8f0; --text-muted: #94a3b8; --bg: #000;
+    }
+    [data-theme="light"] { --dark: #f8fafc; --glass: rgba(0,0,0,0.05); --text: #1e293b; --text-muted: #64748b; --bg: #f1f5f9; }
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
+  
+    #particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+    
+    .navbar { position: fixed; top: 0; width: 100%; background: var(--glass); backdrop-filter: blur(20px); z-index: 1000; padding: 1rem 0; transition: all 0.3s; }
+    .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 2rem; }
+    .logo { font-size: 1.5rem; font-weight: 700; background: linear-gradient(45deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .nav-links { display: flex; list-style: none; gap: 2rem; }
+    .nav-links a { color: var(--text); text-decoration: none; font-weight: 500; transition: color 0.3s; position: relative; }
+    .nav-links a:hover { color: var(--primary); }
+    .nav-links a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--primary); transition: width 0.3s; }
+    .nav-links a:hover::after { width: 100%; }
+    .theme-toggle { background: var(--glass); border: 1px solid rgba(255,255,255,0.1); border-radius: 50px; padding: 0.5rem 1rem; cursor: pointer; transition: all 0.3s; }
+    
+    /* Hero Section */
+    .hero { height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; position: relative; }
+    .hero-content h1 { font-size: clamp(3rem, 8vw, 6rem); font-weight: 700; margin-bottom: 1rem; background: linear-gradient(45deg, var(--primary), var(--secondary), #ff6b6b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: fadeInUp 1s ease; }
+    .hero-content p { font-size: 1.3rem; max-width: 600px; margin: 0 auto 2rem; opacity: 0.9; animation: fadeInUp 1s ease 0.2s both; }
+    .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; animation: fadeInUp 1s ease 0.4s both; }
+    .btn { padding: 1rem 2rem; border: none; border-radius: 50px; font-weight: 600; text-decoration: none; transition: all 0.3s; cursor: pointer; }
+    .btn-primary { background: linear-gradient(45deg, var(--primary), var(--secondary)); color: white; box-shadow: 0 10px 30px rgba(0,212,255,0.3); }
+    .btn-secondary { background: var(--glass); color: var(--text); border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(10px); }
+    
+    /* Sections */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+    section { padding: 100px 0; }
+    .section-title { font-size: 3rem; text-align: center; margin-bottom: 4rem; background: linear-gradient(45deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; opacity: 0; transform: translateY(50px); }
+    
+    /* Skills */
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
+    .skill-card { background: var(--glass); backdrop-filter: blur(20px); padding: 2rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); text-align: center; transition: all 0.3s; opacity: 0; transform: translateY(30px); }
+    .skill-card:hover { transform: translateY(-10px); border-color: var(--primary); box-shadow: 0 20px 40px rgba(0,212,255,0.2); }
+    .skill-icon { font-size: 3rem; background: linear-gradient(45deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1rem; }
+    
+    /* Projects */
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; }
+    .project-card { background: var(--glass); backdrop-filter: blur(20px); border-radius: 20px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); transition: all 0.4s; opacity: 0; transform: translateY(50px); position: relative; }
+    .project-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--primary), var(--secondary)); }
+    .project-card:hover { transform: translateY(-15px); box-shadow: 0 30px 60px rgba(0,0,0,0.3); }
+    .project-content { padding: 2rem; }
+    .project-title { font-size: 1.5rem; margin-bottom: 1rem; color: var(--primary); }
+    .project-tech { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+    .tech-tag { background: rgba(255,255,255,0.1); padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.85rem; }
+    
+    /* Contact */
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .contact-info h3 { color: var(--primary); margin-bottom: 1rem; }
+    .contact-item { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; opacity: 0; transform: translateX(-30px); }
+    .contact-item i { font-size: 1.5rem; width: 40px; background: var(--glass); border-radius: 50%; text-align: center; padding: 0.8rem; }
+    
+    /* Animations */
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
+    .reveal { opacity: 0; transform: translateY(50px); transition: all 0.8s ease; }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+    
+    /* Responsive */
+    @media (max-width: 768px) { .nav-links { display: none; } .contact-grid { grid-template-columns: 1fr; } .cta-buttons { flex-direction: column; align-items: center; } }
+  </style>
+</head>
+<body data-theme="dark">
+  <canvas id="particles"></canvas>
+  
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="logo">Suhassing Rajput</div>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="theme-toggle" onclick="toggleTheme()">
+        <i class="fas fa-moon"></i>
+      </div>
+    </div>
+  </nav>
+
+  <section id="home" class="hero">
+    <div class="hero-content">
+      <h1>Suhassing Rajput</h1>
+      <p>AIML Undergraduate | Building Intelligent Systems | 2nd Year DKTE College</p>
+      <div class="cta-buttons">
+        <a href="#projects" class="btn btn-primary">View Projects</a>
+        <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <section id="skills">
+      <h2 class="section-title reveal">Skills & Technologies</h2>
+      <div class="skills-grid">
+        <div class="skill-card reveal">
+          <div class="skill-icon"><i class="fas fa-brain"></i></div>
+          <h3>Machine Learning</h3>
+          <p>Scikit-learn, TensorFlow, PyTorch, Model Optimization</p>
+        </div>
+        <div class="skill-card reveal">
+          <div class="skill-icon"><i class="fas fa-code"></i></div>
+          <h3>Programming</h3>
+          <p>Python, C/C++, JavaScript, HTML/CSS, Data Structures</p>
+        </div>
+        <div class="skill-card reveal">
+          <div class="skill-icon"><i class="fas fa-chart-line"></i></div>
+          <h3>Data Science</h3>
+          <p>Pandas, NumPy, Matplotlib</p>
+        </div>
+        <div class="skill-card reveal">
+          <div class="skill-icon"><i class="fas fa-robot"></i></div>
+          <h3>Projects</h3>
+          <p>Python Data Analysis, DSA Implementation Library</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <h2 class="section-title reveal">Featured Projects</h2>
+      <div class="projects-grid">
+        <div class="project-card reveal">
+          <div class="project-content">
+            <h3>DSA Implementation Library</h3>
+            <div class="project-tech">
+              <span class="tech-tag">C</span>
+              <span class="tech-tag">C++</span>
+              <span class="tech-tag">Python</span>
+            </div>
+            <p>Created a reusable library of essential data structures (stacks, queues, linked lists, trees) and common algorithms.</p>
+            <div style="margin-top: 1.5rem;">
+              <a href="#" class="btn btn-primary" style="padding: 0.7rem 1.5rem; font-size: 0.9rem;">Live Demo</a>
+              <a href="#" class="btn btn-secondary" style="padding: 0.7rem 1.5rem; font-size: 0.9rem; margin-left: 0.5rem;">GitHub</a>
+            </div>
+          </div>
+        </div>
+        <div class="project-card reveal">
+          <div class="project-content">
+            <h3>Python Data Analysis Mini-Project</h3>
+            <div class="project-tech">
+              <span class="tech-tag">NumPy</span>
+              <span class="tech-tag">Pandas</span>
+              <span class="tech-tag">Matplotlib</span>
+            </div>
+            <p>Utilized NumPy and Pandas for data manipulation. Created basic visualizations (bar charts, scatter plots) using matplotlib to understand trends and patterns.</p>
+
+            <div style="margin-top: 1.5rem;">
+              <a href="#" class="btn btn-primary" style="padding: 0.7rem 1.5rem; font-size: 0.9rem;">Live Demo</a>
+              <a href="#" class="btn btn-secondary" style="padding: 0.7rem 1.5rem; font-size: 0.9rem; margin-left: 0.5rem;">GitHub</a>
+            </div>
+          </div>
+        </div>
+        <div class="project-card reveal">
+          <div class="project-content">
+            <h3>AI College Chatbot</h3>
+            <div class="project-tech">
+              <span class="tech-tag">RASA</span>
+              <span class="tech-tag">OpenAI GPT</span>
+              <span class="tech-tag">Flask</span>
+            </div>
+            <p>Intelligent chatbot handling 100+ college FAQs with NLP intent recognition and API integrations.</p>
+            <div style="margin-top: 1.5rem;">
+              <a href="#" class="btn btn-primary" style="padding: 0.7rem 1.5rem; font-size: 0.9rem;">Live Demo</a>
+              <a href="#" class="btn btn-secondary" style="padding: 0.7rem 1.5rem; font-size: 0.9rem; margin-left: 0.5rem;">GitHub</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience">
+      <h2 class="section-title reveal">Experience & Achievements</h2>
+      <div style="max-width: 800px; margin: 0 auto; text-align: center; opacity: 0; transform: translateY(30px); transition: all 0.8s;">
+        <div style="background: var(--glass); padding: 3rem; border-radius: 20px; backdrop-filter: blur(20px); border: 1px solid #506801;">
+          <h3 style="color: var(--primary); margin-bottom: 1rem; font-size: 1.8rem;">Consistent top performer in college-level coding assessments.
+Participated in coding contests at [Coding Platform: LeetCode/Coding Ninjas/CodeChef].
+</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" style="background: var(--glass); margin: 4rem 0; border-radius: 20px; backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1);">
+      <div class="container">
+        <h2 class="section-title" style="text-align: center;">Let's Connect</h2>
+        <div class="contact-grid">
+          <div>
+            <h3>Rajputsing596@gmail.com</h3>
+            <p>Miraj, Maharashtra | +91-8767617123</p>
+            <div style="margin-top: 2rem;">
+              <a href="https://www.linkedin.com/in/suhas-rajput-02019632a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" style="margin-right: 1rem; font-size: 1.5rem; color: var(--primary); transition: transform 0.3s;"><i class="fab fa-linkedin"></i></a>
+              <a href="https://github.com/Suhas04182" style="margin-right: 1rem; font-size: 1.5rem; color: var(--primary); transition: transform 0.3s;"><i class="fab fa-github"></i></a>
+              <a href="https://www.instagram.com/_suhas_159?igsh=MTB0bXMwNmM5dW5uaA==" style="font-size: 1.5rem; color: var(--primary); transition: transform 0.3s;"><i class="fab fa-instagram"></i></a>
+            </div>
+          </div>
+          <form style="opacity: 0; transform: translateX(30px); transition: all 0.8s;">
+            <input type="text" placeholder="Your Name" style="width: 100%; padding: 1rem; margin-bottom: 1rem; border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; background: transparent; color: var(--text);">
+            <input type="email" placeholder="Email" style="width: 100%; padding: 1rem; margin-bottom: 1rem; border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; background: transparent; color: var(--text);">
+            <textarea placeholder="Message" rows="5" style="width: 100%; padding: 1rem; margin-bottom: 1rem; border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; background: transparent; color: var(--text);"></textarea>
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // Theme Toggle
+    function toggleTheme() {
+      const body = document.body;
+      const currentTheme = body.getAttribute('data-theme');
+      body.setAttribute('data-theme', currentTheme === 'dark' ? 'light' : 'dark');
+      document.querySelector('.theme-toggle i').className = currentTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+    }
+
+    // Particles
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    let particles = [];
+    for(let i = 0; i < 100; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 0.5,
+        vy: (Math.random() - 0.5) * 0.5,
+        radius: Math.random() * 2 + 1
+      });
+    }
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(0, 212, 255, 0.3)';
+        ctx.fill();
+        p.x += p.vx;
+        p.y += p.vy;
+        if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
+        if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
+      });
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+
+    // Scroll Animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Smooth Scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    // Navbar Scroll Effect
+    window.addEventListener('scroll', () => {
+      const navbar = document.querySelector('.navbar');
+      if(window.scrollY > 100) {
+        navbar.style.background = 'rgba(10, 10, 10, 0.95)';
+      } else {
+        navbar.style.background = 'rgba(255,255,255,0.05)';
+      }
+    });
+  </script>
+</body>
+</html>
